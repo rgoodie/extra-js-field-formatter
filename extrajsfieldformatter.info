@@ -1,0 +1,7 @@
+name = Extra Javascript Field Formatter
+description = Allows you to inject an extra JavaScript file on a page by page basis
+
+core = 7.x
+
+
+

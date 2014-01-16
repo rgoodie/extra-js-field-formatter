@@ -1,0 +1,27 @@
+<?php
+/**
+* Implements hook_field_formatter_info().
+*/
+function extrajsfieldformatter_field_formatter_info() {
+  return array(
+    'field_extrajsfieldformatter' => array(
+      'label' => t('Call javascript file'),
+      'field types' => array('file'),
+      'description' => t('Takes the path given in a file field and uses a drupal_get_js()'),
+    ),
+  );
+
+}
+
+/**
+* Implements hook_field_formatter_view().
+*/
+function extrajsfieldformatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+
+	$js_file_path = file_create_url($items[0]['uri']);
+	drupal_add_js($js_file_path);
+	
+	$element[0]['#markup'] = "<code>DEBUG $js_file_path </code>";
+	return $element;
+}
+
