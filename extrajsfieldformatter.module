@@ -20,13 +20,15 @@ function extrajsfieldformatter_field_formatter_view($entity_type, $entity, $fiel
 
 	$file_path_to_insert = file_create_url($items[0]['uri']);
 
-	if (preg_match("js$", $file_path_to_insert)) {
+	if (preg_match("/js$/", $file_path_to_insert)) {
 		drupal_add_js($file_path_to_insert);
-		$element[0]['#markup'] = "<code> DEBUG JS adding $file_path_to_insert </code>";
-	elseif (preg_match("css$", $file_path_to_insert))
+		$element[0]['#markup'] = "<code> DEBUG JS adding $file_path_to_insert </code>"; 
+	}
+	elseif (preg_match("/css$/", $file_path_to_insert))
+	{
 		drupal_add_css($file_path_to_insert);
 		$element[0]['#markup'] = "<code> DEBUG CSS adding $file_path_to_insert </code>";
-	
+	}
 	return $element;
 }
 
