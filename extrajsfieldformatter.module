@@ -18,17 +18,35 @@ function extrajsfieldformatter_field_formatter_info() {
 */
 function extrajsfieldformatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
 
-	$file_path_to_insert = file_create_url($items[0]['uri']);
+	$element_iterator = 0;
 
-	if (preg_match("/js$/", $file_path_to_insert)) {
-		drupal_add_js($file_path_to_insert);
-		$element[0]['#markup'] = "<code> DEBUG JS adding $file_path_to_insert </code>"; 
+
+
+	foreach($items as $item) {
+
+
+
+		if (isset($item['uri'])) {
+			$file_path_to_insert = trim(file_create_url($item['uri']));
+
+			if (preg_match("/js$/", $file_path_to_insert)) {
+				drupal_add_js($file_path_to_insert, array('type' => 'file', 'media' => 'all', 'preprocess' => true, 'every_page' => true));
+				$element[$element_iterator]['#markup'] = "<!-- DEBUG JS adding $file_path_to_insert -->"; 
+			}
+			elseif (preg_match("/css$/", $file_path_to_insert))
+			{
+				drupal_add_css($file_path_to_insert);
+				//$element[$element_iterator]['#markup'] = "<!-- DEBUG CSS adding $file_path_to_insert -->";
+				$element[$element_iterator]['#markup'] = "<style type=\"text/css\" media=\"all\">@import url(\"$file_path_to_insert?n0lfhb\");</style>";
+			}
+			
+		}
+		
+		$element_iterator += 1;
 	}
-	elseif (preg_match("/css$/", $file_path_to_insert))
-	{
-		drupal_add_css($file_path_to_insert);
-		$element[0]['#markup'] = "<code> DEBUG CSS adding $file_path_to_insert </code>";
-	}
-	return $element;
+
+	if (isset($element)) {
+		return $element;
+	} 
 }
 
