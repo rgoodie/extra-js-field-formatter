@@ -37,7 +37,7 @@ function extrajsfieldformatter_field_formatter_view($entity_type, $entity, $fiel
 			{
 				drupal_add_css($file_path_to_insert);
 				//$element[$element_iterator]['#markup'] = "<!-- DEBUG CSS adding $file_path_to_insert -->";
-				$element[$element_iterator]['#markup'] = "<style type=\"text/css\" media=\"all\">@import url(\"$file_path_to_insert\");</style>";
+				$element[$element_iterator]['#markup'] = '<style type="text/css" media="all">@import url("' . $file_path_to_insert . '");</style>';
 			}
 
 		}
